@@ -128,3 +128,29 @@ There are several things you need to do when you add new ENV VARIABLES:
 - Add them to your docker-compose.yml file (just the name, not the value). Only envs listed in the environment section will be exposed to your docker container.
 - Add them (prod version) to your github repo secrets. They will be used to generate the `.env` file on deploy.
 - Add them (prod version) to test.yml file on .github/workflows/test.yml.
+
+
+## Explaining the scripts on package.json
+
+Those first few commands are *deploy-only commands* and you won't actually happen to run them.
+- **prebuild:** Removes the /dist dir on the build preparation
+- **build:** Transpiles the TypeScript code into JavaScript
+- **prepare:** Installs husky
+- **start:** Default start script for the docker-compose.yml file run the application on the AWS deploy
+- **migration:run:** Runs the database migration on the deploy server
+
+Some nice commands that you *might* run:
+- **lint:staged**: Runs the pre-installed linter on the staged changes so that everything's nice and clean.
+- 
+
+Now, there are some commands you *must* run:
+- **migration:generate**: Generates a new database migration on *on the development server* and allows you to actually use the application
+- **migation:run:** Used for generating the deploy migration
+- **dev:seed:** Runs the Prisma seed and fills in your database
+- **dev:docker:** Runs docker-compose up
+- **dev:docker:down:** Runs docker-compose down
+- **dev:** Runs the application on your machine, not on Docker
+- **dev:prisma:studio:** Runs the Prisma Studio, though it seems not to be working
+
+Some testing commands:
+- **test**: Runs the Jest testing
