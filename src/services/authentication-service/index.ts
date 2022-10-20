@@ -4,7 +4,7 @@ import { exclude } from '@/utils/prisma-utils';
 import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { invalidCredentialsError } from './errors';
+import { unregisteredUserError, wrongPasswordError } from './errors';
 
 async function signIn(params: SignInParams): Promise<SignInResult> {
   const { email, password } = params;
@@ -23,7 +23,7 @@ async function signIn(params: SignInParams): Promise<SignInResult> {
 
 async function getUserOrFail(email: string): Promise<GetUserOrFailResult> {
   const user = await userRepository.findByEmail(email, { id: true, email: true, password: true });
-  if (!user) throw invalidCredentialsError();
+  if (!user) throw unregisteredUserError();
 
   return user;
 }
@@ -40,7 +40,7 @@ async function createSession(userId: number) {
 
 async function validatePasswordOrFail(password: string, userPassword: string) {
   const isPasswordValid = await bcrypt.compare(password, userPassword);
-  if (!isPasswordValid) throw invalidCredentialsError();
+  if (!isPasswordValid) throw wrongPasswordError();
 }
 
 export type SignInParams = Pick<User, 'email' | 'password'>;

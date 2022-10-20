@@ -1,8 +1,15 @@
 import { ApplicationError } from '@/protocols';
 
-export function invalidCredentialsError(): ApplicationError {
+export function unregisteredUserError(): ApplicationError {
   return {
     name: 'InvalidCredentialsError',
-    message: 'email or password are incorrect',
+    message: "You need to register that email!",
+  };
+}
+
+export function wrongPasswordError(): ApplicationError {
+  return {
+    name: 'InvalidCredentialsError',
+    message: 'Wrong password!',
   };
 }
