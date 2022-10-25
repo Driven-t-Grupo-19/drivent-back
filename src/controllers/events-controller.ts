@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import eventsService from '@/services/events-service';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
