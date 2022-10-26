@@ -80,3 +80,29 @@ model Purchases {
 
   @@map("purchases")
 }
+
+model Hotels {
+  id             Int             @id @default(autoincrement())
+  name           String
+  profilePicture String
+  Acommodations  Acommodations[]
+
+  @@map("hotels")
+}
+
+model Acommodations {
+  id         Int               @id @default(autoincrement())
+  number     Int
+  type       AcommodationTypes @default(SINGLE)
+  isOccupied Boolean           @default(false)
+  hotelId    Int
+  Hotel      Hotels            @relation(fields: [hotelId], references: [id])
+
+  @@map("acommodations")
+}
+
+enum AcommodationTypes {
+  SINGLE
+  DOUBLE
+  TRIPLE
+}
