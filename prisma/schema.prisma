@@ -84,7 +84,7 @@ model Purchases {
 model Hotels {
   id             Int             @id @default(autoincrement())
   name           String
-  profilePicture String
+  hotelPicture String
   Acommodations  Acommodations[]
 
   @@map("hotels")

@@ -19,6 +19,10 @@ async function main() {
   console.log({ event });
 }
 
+async function createHotels() {
+  
+}
+
 main()
   .catch((e) => {
     console.error(e);
