@@ -8,7 +8,7 @@ import { loadEnv, connectDb, disconnectDB } from '@/config';
 loadEnv();
 
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, purchasesRouter } from '@/routers';
+import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, purchasesRouter, oAuthRouter } from '@/routers';
 
 const app = express();
 app
@@ -17,6 +17,7 @@ app
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/users', usersRouter)
   .use('/auth', authenticationRouter)
+  .use('/oauth', oAuthRouter)
   .use('/event', eventsRouter)
   .use('/enrollments', enrollmentsRouter)
   .use('/purchases', purchasesRouter)
