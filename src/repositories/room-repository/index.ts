@@ -1,8 +1,8 @@
 import { prisma } from '@/config';
-import { Acommodations } from '@prisma/client';
+import { Accommodations } from '@prisma/client';
 
-async function listByHotelId(id:number){
-    return await prisma.acommodations.findMany({where:{hotelId:id}});
+async function listByHotelId(id: number) {
+    return await prisma.accommodations.findMany({ where: { hotelId: id } });
 };
 
 const acommodationsRepository = {

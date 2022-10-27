@@ -101,7 +101,6 @@ model Accommodations {
   userId     Int               @default(0)
   slots      Int               @default(1)
   Hotel      Hotels            @relation(fields: [hotelId], references: [id])
-  userId     Int?
   User       User?              @relation(fields: [userId], references: [id])
 
   @@map("accommodations")
