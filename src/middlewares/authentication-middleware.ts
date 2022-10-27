@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { unauthorizedError } from '@/errors';
 import { prisma } from '@/config';
+import sessionRepository from '@/repositories/session-repository';
 
 export async function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');
@@ -13,7 +14,8 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
   if (!token) return generateUnauthorizedResponse(res);
 
   try {
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+    //const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+    //const {userId} =  await sessionRepository.find(token);
 
     const session = await prisma.session.findFirst({
       where: {
@@ -21,6 +23,8 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
       },
     });
     if (!session) return generateUnauthorizedResponse(res);
+
+    const {userId} = session;
 
     req.userId = userId;
 
