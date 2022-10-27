@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
   engineType = "binary"
 }
 
@@ -93,14 +93,14 @@ model Hotels {
 }
 
 model Accommodations {
-  id         Int               @id @default(autoincrement())
-  number     Int
-  type       AcommodationTypes @default(SINGLE)
-  hotelId    Int
-  userId     Int               @default(0)
-  slots      Int               @default(1)
-  Hotel      Hotels            @relation(fields: [hotelId], references: [id])
-  User       User?              @relation(fields: [userId], references: [id])
+  id      Int               @id @default(autoincrement())
+  number  Int
+  type    AcommodationTypes @default(SINGLE)
+  hotelId Int
+  userId  Int?
+  slots   Int               @default(1)
+  Hotel   Hotels            @relation(fields: [hotelId], references: [id])
+  User    User?             @relation(fields: [userId], references: [id])
 
   @@map("accommodations")
 }
