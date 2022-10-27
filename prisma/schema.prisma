@@ -85,12 +85,12 @@ model Hotels {
   id             Int             @id @default(autoincrement())
   name           String
   hotelPicture String
-  Acommodations  Acommodations[]
+  Accommodations  Accommodations[]
 
   @@map("hotels")
 }
 
-model Acommodations {
+model Accommodations {
   id         Int               @id @default(autoincrement())
   number     Int
   type       AcommodationTypes @default(SINGLE)
@@ -98,7 +98,7 @@ model Acommodations {
   hotelId    Int
   Hotel      Hotels            @relation(fields: [hotelId], references: [id])
 
-  @@map("acommodations")
+  @@map("accommodations")
 }
 
 enum AcommodationTypes {
