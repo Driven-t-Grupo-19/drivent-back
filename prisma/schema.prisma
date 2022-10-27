@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique @db.VarChar(255)
-  password   String       @db.VarChar(255)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Session    Session[]
-  Enrollment Enrollment[]
-  Purchases  Purchases[]
+  id             Int              @id @default(autoincrement())
+  email          String           @unique @db.VarChar(255)
+  password       String           @db.VarChar(255)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Session        Session[]
+  Enrollment     Enrollment[]
+  Purchases      Purchases[]
+  Accommodations Accommodations[]
 }
 
 model Session {
@@ -82,10 +83,10 @@ model Purchases {
 }
 
 model Hotels {
-  id             Int             @id @default(autoincrement())
+  id             Int              @id @default(autoincrement())
   name           String
-  hotelPicture String
-  Accommodations  Accommodations[]
+  hotelPicture   String
+  Accommodations Accommodations[]
 
   @@map("hotels")
 }
@@ -97,6 +98,8 @@ model Accommodations {
   isOccupied Boolean           @default(false)
   hotelId    Int
   Hotel      Hotels            @relation(fields: [hotelId], references: [id])
+  userId     Int?
+  User       User?              @relation(fields: [userId], references: [id])
 
   @@map("accommodations")
 }
