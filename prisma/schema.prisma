@@ -96,7 +96,6 @@ model Accommodations {
   id         Int               @id @default(autoincrement())
   number     Int
   type       AcommodationTypes @default(SINGLE)
-  isOccupied Boolean           @default(false)
   hotelId    Int
   userId     Int               @default(0)
   slots      Int               @default(1)
