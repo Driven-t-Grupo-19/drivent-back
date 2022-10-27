@@ -1,2 +1,2 @@
 -- DropForeignKey
-ALTER TABLE "acommodations" DROP CONSTRAINT "acommodations_userId_fkey";
+ALTER TABLE "accommodations" DROP CONSTRAINT "accommodations_userId_fkey";

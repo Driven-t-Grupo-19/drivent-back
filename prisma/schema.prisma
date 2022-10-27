@@ -12,14 +12,15 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique @db.VarChar(255)
-  password   String       @db.VarChar(255)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Session    Session[]
-  Enrollment Enrollment[]
-  Purchases  Purchases[]
+  id             Int              @id @default(autoincrement())
+  email          String           @unique @db.VarChar(255)
+  password       String           @db.VarChar(255)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Session        Session[]
+  Enrollment     Enrollment[]
+  Purchases      Purchases[]
+  Accommodations Accommodations[]
 }
 
 model Session {
@@ -83,25 +84,25 @@ model Purchases {
 }
 
 model Hotels {
-  id             Int             @id @default(autoincrement())
+  id             Int              @id @default(autoincrement())
   name           String
-  hotelPicture String
-  Acommodations  Acommodations[]
+  hotelPicture   String
+  Accommodations Accommodations[]
 
   @@map("hotels")
 }
 
-model Acommodations {
+model Accommodations {
   id         Int               @id @default(autoincrement())
   number     Int
   type       AcommodationTypes @default(SINGLE)
-  isOccupied Boolean           @default(false)
   hotelId    Int
   userId     Int               @default(0)
   slots      Int               @default(1)
   Hotel      Hotels            @relation(fields: [hotelId], references: [id])
+  User       User?              @relation(fields: [userId], references: [id])
 
-  @@map("acommodations")
+  @@map("accommodations")
 }
 
 enum AcommodationTypes {
