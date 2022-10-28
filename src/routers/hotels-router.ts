@@ -4,6 +4,6 @@ import { Router } from 'express';
 
 const hotelsRouter = Router();
 
-hotelsRouter.get('/list', getHotels);
+hotelsRouter.get('/', getHotels);
 
 export { hotelsRouter };
