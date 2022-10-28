@@ -20,7 +20,6 @@ model User {
   Session        Session[]
   Enrollment     Enrollment[]
   Purchases      Purchases[]
-  Accommodations Accommodations[]
 }
 
 model Session {
@@ -97,10 +96,9 @@ model Accommodations {
   number     Int
   type       AcommodationTypes @default(SINGLE)
   hotelId    Int
-  userId     Int               @default(0)
+  users      Int[]                                       
   slots      Int               @default(1)
   Hotel      Hotels            @relation(fields: [hotelId], references: [id])
-  User       User?              @relation(fields: [userId], references: [id])
 
   @@map("accommodations")
 }
