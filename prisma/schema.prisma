@@ -92,7 +92,6 @@ model Hotels {
 }
 
 model Accommodations {
-<<<<<<< HEAD
   id         Int               @id @default(autoincrement())
   number     Int
   type       AcommodationTypes @default(SINGLE)
@@ -100,16 +99,6 @@ model Accommodations {
   users      Int[]                                       
   slots      Int               @default(1)
   Hotel      Hotels            @relation(fields: [hotelId], references: [id])
-=======
-  id      Int               @id @default(autoincrement())
-  number  Int
-  type    AcommodationTypes @default(SINGLE)
-  hotelId Int
-  userId  Int?
-  slots   Int               @default(1)
-  Hotel   Hotels            @relation(fields: [hotelId], references: [id])
-  User    User?             @relation(fields: [userId], references: [id])
->>>>>>> c3a689a9626a35f26003bc45bd9ce89f74da11b3
 
   @@map("accommodations")
 }

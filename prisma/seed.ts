@@ -47,9 +47,11 @@ async function createAcommodationsByHotelId(hotelId: number) {
   await prisma.accommodations.createMany({
     data: [
       { number: 100, type: 'SINGLE', hotelId: hotelId, slots: 1 },
+      { number: 101, type: 'DOUBLE', hotelId: hotelId, slots: 1 , users:[996] },
       { number: 101, type: 'DOUBLE', hotelId: hotelId, slots: 2 },
+      { number: 102, type: 'TRIPLE', hotelId: hotelId, slots: 1 , users:[998, 997] },
       { number: 102, type: 'TRIPLE', hotelId: hotelId, slots: 3 },
-      { number: 103, type: 'SINGLE', hotelId: hotelId, slots: 0 , users:[1]}
+      { number: 103, type: 'SINGLE', hotelId: hotelId, slots: 0 , users:[999] }
     ]
   });
 }
