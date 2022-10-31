@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
@@ -11,14 +12,14 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique @db.VarChar(255)
-  password   String       @db.VarChar(255)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Session    Session[]
-  Enrollment Enrollment[]
-  Purchases  Purchases[]
+  id             Int              @id @default(autoincrement())
+  email          String           @unique @db.VarChar(255)
+  password       String           @db.VarChar(255)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Session        Session[]
+  Enrollment     Enrollment[]
+  Purchases      Purchases[]
 }
 
 model Session {
@@ -79,4 +80,31 @@ model Purchases {
   User         User     @relation(fields: [userId], references: [id])
 
   @@map("purchases")
+}
+
+model Hotels {
+  id             Int              @id @default(autoincrement())
+  name           String
+  hotelPicture   String
+  Accommodations Accommodations[]
+
+  @@map("hotels")
+}
+
+model Accommodations {
+  id         Int               @id @default(autoincrement())
+  number     Int
+  type       AcommodationTypes @default(SINGLE)
+  hotelId    Int
+  users      Int[]                                       
+  slots      Int               @default(1)
+  Hotel      Hotels            @relation(fields: [hotelId], references: [id])
+
+  @@map("accommodations")
+}
+
+enum AcommodationTypes {
+  SINGLE
+  DOUBLE
+  TRIPLE
 }
