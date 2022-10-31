@@ -17,6 +17,8 @@ services:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
+      REDIS_URL: ${REDIS_URL}
+
   drivent-postgres-production:
     image: postgres:13-alpine
     environment:
@@ -36,3 +38,13 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - /usr/src/drivent/front-end:/var/www/html
+
+    drivent-redis-development:
+    image: redis:6.2.7-bullseye
+    container_name: drivent-redis-development
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    restart: always
+    command: redis-server
+    volumes:
+      - drivent-redis-data:/data

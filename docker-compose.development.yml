@@ -12,6 +12,17 @@ services:
     volumes:
       - drivent-postgres-data:/var/lib/postgresql/data
     command: postgres -p ${POSTGRES_PORT}
+
+  drivent-redis-development:
+    image: redis:6.2.7-bullseye
+    container_name: drivent-redis-development
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    restart: always
+    command: redis-server
+    volumes:
+      - drivent-redis-data:/data
+
   drivent-development:
     build:
       context: .
@@ -19,6 +30,7 @@ services:
     container_name: drivent-development
     depends_on:
       - drivent-postgres-development
+      - drivent-redis-development
     logging:
       driver: 'json-file'
       options:
@@ -38,5 +50,8 @@ services:
       - ./tsconfig.json:/usr/src/drivent/tsconfig.json
     ports:
       - 4000:4000
+  
 volumes:
   drivent-postgres-data:
+  drivent-redis-data:
+
