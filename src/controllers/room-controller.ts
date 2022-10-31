@@ -15,9 +15,8 @@ export async function bookRoom(req: AuthenticatedRequest, res: Response){
     const id:number = Number(req.params.id);
     const { userId } = req;
 
-    await accommodationService.bookRoomByNumber(id, userId);
-
-    return res.sendStatus(httpStatus.OK)
+    const acommodation = await accommodationService.bookRoomByNumber(id, userId);
+    return res.status(200).send(acommodation)
 };
 
 export async function getUserRoom(req: AuthenticatedRequest, res: Response){
