@@ -10,7 +10,7 @@ async function findRoomById(id:number) {
 };
 
 async function bookRoom(room:Accommodations) {
-    await prisma.accommodations.upsert({
+    return await prisma.accommodations.upsert({
         where:{
             id:room.id
         },
@@ -20,7 +20,7 @@ async function bookRoom(room:Accommodations) {
 };
 
 async function findByUserId(id:number) {
-    return await prisma.accommodations.findMany({
+    return await prisma.accommodations.findFirst({
         where:{
             users:{
                 has: id
@@ -32,11 +32,38 @@ async function findByUserId(id:number) {
     })
 }
 
+
+async function deleteAcommodation(id: number, userId: number) {
+    const {users} = await prisma.accommodations.findFirst({
+        where: { 
+            id, 
+        },
+        select: {
+            users: true
+        }
+    }) 
+    const filterUser = users.filter((id: number) => id !== userId)
+    
+    await prisma.accommodations.update({
+        where: {
+          id,
+        },
+        data: {
+          users: {
+            set: filterUser
+          }, slots: {
+            increment: 1
+          }
+        },
+      })
+}
+
 const acommodationsRepository = {
     listByHotelId,
     bookRoom,
     findRoomById,
-    findByUserId
+    findByUserId,
+    deleteAcommodation
 };
 
 export default acommodationsRepository;

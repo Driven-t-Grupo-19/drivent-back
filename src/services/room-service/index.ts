@@ -9,16 +9,25 @@ async function listByHotelId(id:number) {
 
 async function bookRoomByNumber(id:number, userId:number) {
     const accommodation = await accommodationsRepository.findRoomById(id);
-
     if(accommodation.slots === 0 ) throw conflictError('vagas esgotadas!');
 
-    const users:number[] = [...accommodation.users];
+    const users:number[] = accommodation.users;
+    const haveId = users.indexOf(userId)
+    if(haveId !== -1) {
+        return
+    }
+
+    const userAcommodation = await accommodationsRepository.findByUserId(userId)
+    if(userAcommodation !== null){
+        await accommodationsRepository.deleteAcommodation(userAcommodation.id, userId)
+    }
+    
     users.push(userId);
 
     accommodation.users = users;
     accommodation.slots -= 1;
 
-    await accommodationsRepository.bookRoom(accommodation);
+    return await accommodationsRepository.bookRoom(accommodation);
 };
 
 async function findRoom(userId:number) {
