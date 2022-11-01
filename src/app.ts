@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
+import { redis } from '@/config';
 
 import { loadEnv, connectDb, disconnectDB } from '@/config';
 
@@ -27,11 +28,13 @@ app
 
 export function init(): Promise<Express> {
   connectDb();
+  redis.connect();
   return Promise.resolve(app);
 }
 
 export async function close(): Promise<void> {
   await disconnectDB();
+  redis.quit;
 }
 
 export default app;
