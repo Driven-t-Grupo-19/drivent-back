@@ -12,14 +12,14 @@ datasource db {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  email          String           @unique @db.VarChar(255)
-  password       String           @db.VarChar(255)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  Session        Session[]
-  Enrollment     Enrollment[]
-  Purchases      Purchases[]
+  id         Int          @id @default(autoincrement())
+  email      String       @unique @db.VarChar(255)
+  password   String       @db.VarChar(255)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Session    Session[]
+  Enrollment Enrollment[]
+  Purchases  Purchases[]
 }
 
 model Session {
@@ -92,13 +92,13 @@ model Hotels {
 }
 
 model Accommodations {
-  id         Int               @id @default(autoincrement())
-  number     Int
-  type       AcommodationTypes @default(SINGLE)
-  hotelId    Int
-  users      Int[]                                       
-  slots      Int               @default(1)
-  Hotel      Hotels            @relation(fields: [hotelId], references: [id])
+  id      Int               @id @default(autoincrement())
+  number  Int
+  type    AcommodationTypes @default(SINGLE)
+  hotelId Int
+  users   Int[]
+  slots   Int               @default(1)
+  Hotel   Hotels            @relation(fields: [hotelId], references: [id])
 
   @@map("accommodations")
 }
@@ -107,4 +107,23 @@ enum AcommodationTypes {
   SINGLE
   DOUBLE
   TRIPLE
+}
+
+model Activities {
+  id         Int             @id @default(autoincrement())
+  name       String
+  slots      Int             @default(30)
+  day        DateTime
+  auditorium AuditoriumTypes
+  users      Int[]
+  startsAt   String
+  endsAt     String
+
+  @@map("activities")
+}
+
+enum AuditoriumTypes {
+  MAIN
+  SIDE
+  WORKSHOP
 }
