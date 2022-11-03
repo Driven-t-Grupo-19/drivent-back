@@ -113,12 +113,13 @@ model Activities {
   id         Int             @id @default(autoincrement())
   name       String
   slots      Int             @default(30)
-  day        DateTime
+  day        DateTime 
   auditorium AuditoriumTypes
   users      Int[]
   startsAt   String
   endsAt     String
 
+  @@index([day])
   @@map("activities")
 }
 
