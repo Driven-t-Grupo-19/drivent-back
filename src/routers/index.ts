@@ -6,3 +6,4 @@ export * from './purchases-router';
 export * from './oauth-router';
 export * from './hotels-router';
 export * from './room-router';
+export * from './activities-router';
