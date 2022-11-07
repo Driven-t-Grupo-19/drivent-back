@@ -39,7 +39,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - /usr/src/drivent/front-end:/var/www/html
 
-    drivent-redis-development:
+  drivent-redis-development:
     image: redis:6.2.7-bullseye
     container_name: drivent-redis-development
     ports:

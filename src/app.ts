@@ -9,7 +9,7 @@ import { loadEnv, connectDb, disconnectDB } from '@/config';
 loadEnv();
 
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, purchasesRouter, hotelsRouter, roomRouter, oAuthRouter } from '@/routers';
+import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, purchasesRouter, hotelsRouter, roomRouter, oAuthRouter, activitiesRouter } from '@/routers';
 
 const app = express();
 app
@@ -23,6 +23,7 @@ app
   .use('/enrollments', enrollmentsRouter)
   .use('/purchases', purchasesRouter)
   .use('/hotels', hotelsRouter)
+  .use('/activities', activitiesRouter)
   .use(roomRouter)
   .use(handleApplicationErrors);
 

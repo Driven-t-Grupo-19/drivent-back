@@ -115,6 +115,7 @@ model Activities {
   users      Int[]
   startsAt   String
   endsAt     String
+
   @@index([day])
   @@map("activities")
 }
