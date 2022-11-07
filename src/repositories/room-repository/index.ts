@@ -10,13 +10,24 @@ async function findRoomById(id:number) {
 };
 
 async function bookRoom(room:Accommodations) {
-    return await prisma.accommodations.upsert({
-        where:{
-            id:room.id
-        },
-        create:room,
-        update:room
-    });
+
+    try{
+        return await prisma.$transaction(async (prisma) => {
+
+            return await prisma.accommodations.upsert({
+                where:{
+                    id:room.id
+                },
+                create:room,
+                update:room
+            });
+
+        });
+    }catch(error){
+        console.log(error);
+    }
+
+
 };
 
 async function findByUserId(id:number) {
@@ -34,28 +45,39 @@ async function findByUserId(id:number) {
 
 
 async function deleteAcommodation(id: number, userId: number) {
-    const {users} = await prisma.accommodations.findFirst({
-        where: { 
-            id, 
-        },
-        select: {
-            users: true
-        }
-    }) 
-    const filterUser = users.filter((id: number) => id !== userId)
-    
-    await prisma.accommodations.update({
-        where: {
-          id,
-        },
-        data: {
-          users: {
-            set: filterUser
-          }, slots: {
-            increment: 1
-          }
-        },
-      })
+
+    try{
+        return await prisma.$transaction(async (prisma) => {
+
+            const {users} = await prisma.accommodations.findFirst({
+                where: { 
+                    id, 
+                },
+                select: {
+                    users: true
+                }
+            }) 
+            const filterUser = users.filter((id: number) => id !== userId)
+            
+            return await prisma.accommodations.update({
+                where: {
+                  id,
+                },
+                data: {
+                  users: {
+                    set: filterUser
+                  }, slots: {
+                    increment: 1
+                  }
+                },
+              })
+
+        });
+    }catch(error){
+        console.log(error);
+    }
+
+
 }
 
 const acommodationsRepository = {

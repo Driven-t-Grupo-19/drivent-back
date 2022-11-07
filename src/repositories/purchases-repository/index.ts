@@ -1,18 +1,40 @@
-import { prisma } from '@/config';
+//import { prisma } from '@/config';
 import { Purchases } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient();
+
+
 
 export type CreatePurchasesParams = Omit<Purchases, 'id' | 'createdAt' >;
 export type UpdatePurchasesParams = Omit<CreatePurchasesParams, 'userId'>;
 
 
 async function upsertPurchase(userId: number, createPurchase: CreatePurchasesParams, updatePurchase: UpdatePurchasesParams) {
-    return prisma.purchases.upsert({
-        where: {
-            userId,
-        }, 
-        create: createPurchase,
-        update: updatePurchase
-    });
+
+    try{
+        return await prisma.$transaction(async (prisma) => {
+
+            const purchases = await prisma.purchases.upsert({
+                    where: {
+                        userId,
+                    }, 
+                    create: createPurchase,
+                    update: updatePurchase
+                });
+    
+            return purchases;
+        });
+    }catch(error){
+        console.log(error);
+    }
+
+    // return prisma.purchases.upsert({
+    //     where: {
+    //         userId,
+    //     }, 
+    //     create: createPurchase,
+    //     update: updatePurchase
+    // });
 
 }
 
