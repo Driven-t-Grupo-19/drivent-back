@@ -3,7 +3,7 @@
 
 generator client {
   provider   = "prisma-client-js"
-  engineType = "binary"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
