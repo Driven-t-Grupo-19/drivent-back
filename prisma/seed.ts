@@ -16,6 +16,10 @@ async function main() {
     });
   }
 
+  await prisma.$executeRaw`TRUNCATE TABLE hotels RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE accommodations RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE activities RESTART IDENTITY CASCADE`;
+
   await createHotels();
   await createAcommodations();
   await createActivies();
@@ -24,9 +28,9 @@ async function main() {
 async function createHotels() {
   await prisma.hotels.createMany({
     data: [
-      { name: 'Hotel dos Cria', hotelPicture: 'https://img.a.transfermarkt.technology/portrait/big/353108-1605189960.jpg?lm=1' },
-      { name: 'Hotel dos De Verdade', hotelPicture: 'https://pbs.twimg.com/media/FeBhH7JXgAYbi7x?format=jpg&name=large' },
-      { name: 'Hotel dos Brabo', hotelPicture: 'https://diariodofla.com.br/wp-content/uploads/2022/02/David-Luiz.jpg' }
+      {id:1, name: 'Hotel dos Cria', hotelPicture: 'https://img.a.transfermarkt.technology/portrait/big/353108-1605189960.jpg?lm=1' },
+      {id:2, name: 'Hotel dos De Verdade', hotelPicture: 'https://pbs.twimg.com/media/FeBhH7JXgAYbi7x?format=jpg&name=large' },
+      {id:3, name: 'Hotel dos Brabo', hotelPicture: 'https://diariodofla.com.br/wp-content/uploads/2022/02/David-Luiz.jpg' }
     ]
   })
 }
@@ -43,6 +47,7 @@ async function createAcommodations() {
 }
 
 async function createAcommodationsByHotelId(hotelId: number) {
+  
   await prisma.accommodations.createMany({
     data: [
       { number: 100, type: 'SINGLE', hotelId: hotelId, slots: 1 },
@@ -58,15 +63,15 @@ async function createAcommodationsByHotelId(hotelId: number) {
 async function createActivies() {
   await prisma.activities.createMany({
     data: [
-      { name: 'Top 10 Aliens Ben 10', auditorium: 'MAIN', startsAt: '10:00', endsAt: '11:00', day: getDatePlusNDays(2) },
-      { name: 'Como zerar Skyrim', auditorium: 'SIDE', startsAt: '10:00', endsAt: '17:00', day: getDatePlusNDays(2) },
-      { name: 'Anúncio do LoL 2', auditorium: 'WORKSHOP', startsAt: '10:00', endsAt: '11:00', day: getDatePlusNDays(2) },
-      { name: 'Frank parece o Mano Walter?', auditorium: 'MAIN', startsAt: '10:00', endsAt: '11:00', day: getDatePlusNDays(3) },
-      { name: 'Top 10 gols do Gabigol', auditorium: 'SIDE', startsAt: '10:00', endsAt: '17:00', day: getDatePlusNDays(3) },
-      { name: 'Dudu parece o Kaka?', auditorium: 'WORKSHOP', startsAt: '10:00', endsAt: '11:00', day: getDatePlusNDays(3) },
-      { name: 'Aula inicial de JS com Pedrão', auditorium: 'MAIN', startsAt: '10:00', endsAt: '11:00', day: getDatePlusNDays(4) },
-      { name: 'Expondo os problemas do React', auditorium: 'SIDE', startsAt: '10:00', endsAt: '17:00', day: getDatePlusNDays(4) },
-      { name: 'Como falar em público', auditorium: 'WORKSHOP', startsAt: '10:00', endsAt: '11:00', day: getDatePlusNDays(4) }
+      { name: 'Top 10 Aliens Ben 10', auditorium: 'MAIN', startsAt: '9:00', endsAt: '11:00', day: getDatePlusNDays(2) },
+      { name: 'Como zerar Skyrim', auditorium: 'SIDE', startsAt: '12:00', endsAt: '13:00', day: getDatePlusNDays(2) },
+      { name: 'Anúncio do LoL 2', auditorium: 'WORKSHOP', startsAt: '14:00', endsAt: '17:00', day: getDatePlusNDays(2) },
+      { name: 'Frank parece o Mano Walter?', auditorium: 'MAIN', startsAt: '9:00', endsAt: '10:00', day: getDatePlusNDays(3) },
+      { name: 'Top 10 gols do Gabigol', auditorium: 'SIDE', startsAt: '11:00', endsAt: '12:00', day: getDatePlusNDays(3) },
+      { name: 'Dudu parece o Kaka?', auditorium: 'WORKSHOP', startsAt: '13:00', endsAt: '16:00', day: getDatePlusNDays(3) },
+      { name: 'Aula inicial de JS com Pedrão', auditorium: 'MAIN', startsAt: '9:00', endsAt: '12:00', day: getDatePlusNDays(4) },
+      { name: 'Expondo os problemas do React', auditorium: 'SIDE', startsAt: '13:00', endsAt: '15:00', day: getDatePlusNDays(4) },
+      { name: 'Como falar em público', auditorium: 'WORKSHOP', startsAt: '17:00', endsAt: '20:00', day: getDatePlusNDays(4) }
     ]
   });
 }

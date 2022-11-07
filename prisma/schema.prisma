@@ -78,7 +78,6 @@ model Purchases {
   createdAt    DateTime @default(now())
   userId       Int      @unique
   User         User     @relation(fields: [userId], references: [id])
-
   @@map("purchases")
 }
 
@@ -87,7 +86,6 @@ model Hotels {
   name           String
   hotelPicture   String
   Accommodations Accommodations[]
-
   @@map("hotels")
 }
 
@@ -99,7 +97,6 @@ model Accommodations {
   users   Int[]
   slots   Int               @default(1)
   Hotel   Hotels            @relation(fields: [hotelId], references: [id])
-
   @@map("accommodations")
 }
 
