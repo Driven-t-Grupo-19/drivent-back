@@ -15,7 +15,7 @@ async function reserve(activityId: number, userId: number) {
     if(activities.users.includes(userId)) throw conflictError("Já cadastrado");
     const userActivities = await activitiesRepository.getUserActivitiesById(userId)
     const hourFiltered = userActivities.filter((activity) => {[activities.startsAt, activities.endsAt]})
-    console.log(hourFiltered)
+    
 }
 
 
